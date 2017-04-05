@@ -1,0 +1,7 @@
+set term png
+set out "plot.png"
+plot\
+ "log" with points title "datapoints"\
+,"data" using 1:2 with lines title "Linear interpolation"\
+,"data" using 1:3 with lines title "Quadratic spline interpolation"\
+,"data" using 1:4 with lines title "Cubic spline interpolation"
