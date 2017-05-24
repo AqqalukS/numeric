@@ -1,7 +1,8 @@
 CFLAGS = -Wall -std=gnu99
+PLOTTER = gnuplot
 
 plot.png : plot.gpi data log
-	gnuplot $<
+	$(PLOTTER) $<
 
 data log : main
 	./$< 1> data 2> log

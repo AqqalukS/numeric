@@ -1,0 +1,26 @@
+Comparison between adaptive integration and gsl rutines
+
+int (sqrt(x), 0, 1) delta = 1e-09, eps = 1e-09
+calls =       4460, my int  =   0.667
+calls =        231, gsl int =   0.667
+
+int (1 / sqrt(x), 0, 1) delta = 1e-09, eps = 1e-09
+calls =    2030460, my int  =   2.000
+calls =        231, gsl int =   2.000
+
+int (ln(x) / sqrt(x), 0, 1) delta = 1e-09, eps = 1e-09
+calls =    8824616, my int  =  -4.000
+calls =        315, gsl int =  -4.000
+
+int (exp(-abs(x)), -inf, inf), delta = 1e-09, eps = 1e-09
+calls =      22512, my int  =   2.000
+calls =        270, gsl int =   2.000
+
+int (exp(-x^2), inf, -2), delta = 1e-09, eps = 1e-09
+calls =      20604, my int  =  -1.768
+calls =        195, gsl int =  -1.768
+
+int (sqrt(1 - (1 - x)^2), 0, 1), delta = 1e-10, eps = 1e-10
+calls =      25748, my int  = 3.14159265358979933
+calls =        273, gsl int = 3.14159265358979312
+M_PI from math.h            = 3.14159265358979312

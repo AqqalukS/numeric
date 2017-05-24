@@ -7,6 +7,6 @@ void print_hello () {
 }
 
 void print_me () {
-	
-	printf("%g", getlogin_r ());
+	char *user = getenv("USER");
+	printf("%s", user);
 }

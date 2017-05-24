@@ -1,0 +1,45 @@
+##############
+# Exercise A #
+##############
+Initial x = 
+2
+2
+
+f(x) = 401
+number of steps = 26480
+after optimisation x = 
+1
+1
+
+f(x) = 5.62742e-18
+
+abla f = 
+9.68877e-09
+-2.4754e-09
+
+Initial x = 
+1
+1
+
+f(x) = 106
+-46
+-38
+
+number of steps = 34
+after optimisation x = 
+-0.127961
+-1.95371
+
+f(x) = 178.337
+
+abla f = 
+7.1493e-09
+-1.81515e-09
+
+##############
+# Exercise B #
+##############
+Number of steps = 8
+-3.77932
+-3.28319
+
