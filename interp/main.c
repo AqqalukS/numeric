@@ -1,19 +1,17 @@
-#include "interp.h"
-#include "vector.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-int main(void)
-{
-	int n = 30;
+#include "interp.h"
+#include "vector.h"
+int main(int argc, const char *argv[]) {
+	int n = atof(argv[1]);
 
 	vector *x = vector_alloc (n);
 	vector *y = vector_alloc (n);
 
 	fprintf(stderr, "# datapoints\n");
 	for (int i = 0; i < n; i++) {
-		vector_set (x, i, M_PI/30*i);
+		vector_set (x, i, M_PI/n*i);
 		vector_set (y, i, cos(vector_get(x, i)));
 		fprintf(stderr, "%g %g\n", 
 				vector_get(x, i), 
