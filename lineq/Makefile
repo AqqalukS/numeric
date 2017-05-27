@@ -1,11 +1,20 @@
 CFLAGS += -I../matrix -I../vector -Wall -O
 LDLIBS += -lm 
-CC = gcc --std=gnu99
+CC = gcc-4.9 -std=c11
 
-data : main 
+all : data
+	cat ./$<
+
+data : mainA mainB mainC
 	./$< > $@
+	./$(word 2, $^) >> $@
+	./$(word 3, $^) >> $@
 
-main : main.o lineq.o matrix.o vector.o
+mainC : mainC.o lineq.o matrix.o vector.o
+
+mainB : mainB.o lineq.o matrix.o vector.o
+
+mainA : mainA.o lineq.o matrix.o vector.o
 
 matrix.o : ../matrix/matrix.c ../matrix/matrix.h
 	$(CC) -c $(CFLAGS) $< -o $@
@@ -14,4 +23,4 @@ vector.o : ../vector/vector.c ../vector/vector.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	$(RM) *.o main
+	$(RM) *.o mainA mainB mainC data

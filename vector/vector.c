@@ -27,7 +27,7 @@ void vector_set (vector *v, int i, double x) {
 
 void vector_print (vector *v) {
 	for (int i = 0; i < v->size; i++) {
-		printf("%g\n", v->data[i]);
+		printf("%7.5f\n", vector_get (v, i));
 	}
 	printf("\n");
 }

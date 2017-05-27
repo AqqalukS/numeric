@@ -2,7 +2,7 @@ CFLAGS += -I../matrix -I../vector -I../lineq -Wall -O
 LDLIBS += -lm 
 CC = gcc-4.9 -std=c11
 PLOTTER = gnuplot
-N = 9 #number of points
+N = 20 #number of points
 
 plot.png : plot.gpi data log
 	$(PLOTTER) $<
