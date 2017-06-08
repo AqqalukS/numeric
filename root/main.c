@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <math.h>
+#include "root.h"
 #include "matrix.h"
 
-int newton_root (void f(vector *, vector *), vector *x, double dx, double eps);
-
-int main(int argc, const char *argv[])
-{
+int main(int argc, const char *argv[]) {
 	vector *x = vector_alloc (2);
 	vector *fx = vector_alloc (2);
 	int ds, calls;
@@ -13,8 +11,8 @@ int main(int argc, const char *argv[])
 
 	// first system of equation
 	calls = 0;
-	dx = 1e-3, eps = 1e-5;
-	double A = 1000;
+	dx = 1e-9, eps = 1e-9;
+	double A = 10000;
 
 	void f1 (vector *v, vector *df) {
 		calls++;
@@ -24,7 +22,7 @@ int main(int argc, const char *argv[])
 		vector_set (df, 1, exp(-x) + exp(-y) - 1 - 1./A);
 	}
 	
-	vector_set (x, 0, 1);
+	vector_set (x, 0, 2);
 	vector_set (x, 1, 1);
 	
 	printf("Initial:\n"); printf("x = ( ");

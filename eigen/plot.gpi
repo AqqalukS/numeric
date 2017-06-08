@@ -1,0 +1,21 @@
+set term png size 800, 400 font ",10"
+set out "plot.png"
+set key box opaque left
+set multiplot layout 1,2 title "Comparizon of different Jacobi methods"
+#
+set logscale xy
+set xlabel "N"
+set ylabel "Time (s)" offset -1,0,0
+plot \
+  "times.txt" index 0 title "Jacobi cyclic"\
+ ,"times.txt" index 1 title "Jacobi row by row"\
+ ,"times.txt" index 2 title "Jacobi classic"
+#
+set logscale xy
+set xlabel "N"
+set ylabel "Number of rotations" offset 1,0,0
+plot \
+  "rotations.txt" index 0 title "Jacobi cyclic"\
+ ,"rotations.txt" index 1 title "Jacobi row by row"\
+ ,"rotations.txt" index 2 title "Jacobi classic"
+unset multiplot

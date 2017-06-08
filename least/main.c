@@ -6,7 +6,7 @@
 #include "lineq.h"
 
 void least_square_fit (vector *x, vector *y, vector *dy, vector *c, 
-		matrix *S, double f(int, double), int m);
+		matrix *S, double f(int, double));
 
 // Exercise A
 double funs (int i, double x) {
@@ -51,7 +51,7 @@ int main(int argc, const char *argv[])
 			0.605, 0.856, 0.351, 1.083, 1.002};
 
 	// Allocate stuff
-	int m = 3, n = 10, nx = 100;
+	int m = 3, n = 10, nx = 1000;
 	vector *x = vector_alloc (n);
 	vector *y = vector_alloc (n);
 	vector *dy = vector_alloc (n);
@@ -66,12 +66,11 @@ int main(int argc, const char *argv[])
 	}
 	printf("\n\n");
 
-	least_square_fit (x, y, dy, c, S, funs, m);
+	least_square_fit (x, y, dy, c, S, funs);
 
-	double dx = vector_get (x, 0) + (vector_get (x, n-1) -
-				vector_get (x, 0)) / (nx-1);
+	double dx =  (vector_get (x, n-1) - vector_get (x, 0)) / (nx-1);
 
-	double xi = vector_get (x, 0) - dx/10;
+	double xi = vector_get (x, 0) - vector_get (x, 0) / 5;
 	while (xi < vector_get(x, n-1) + dx) {
 		printf("%g %g %g %g\n", xi,
 			fit(xi, funs, c),

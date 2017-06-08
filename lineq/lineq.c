@@ -61,7 +61,7 @@ void qr_gs_inverse (const matrix *Q, const matrix *R, matrix *B) {
 	vector_free (b);
 }
 
-void givens (matrix *A) {
+void givens_decomp (matrix *A) {
 	for (int q = 0; q < A->size2; q++) {
 		for (int p = q + 1; p < A->size1; p++) {
 			double theta = atan2 (matrix_get (A, p, q),

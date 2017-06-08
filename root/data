@@ -1,18 +1,18 @@
 Initial:
-x = ( 1 1 )
-f(x) = ( 999 -0.265241 )
-number of steps = 2
-x = ( nan nan )
-f(x) = ( nan nan )
+x = ( 2 1 )
+f(x) = ( 19999 -0.496885 )
+number of steps = 12
+x = ( 9.10615 1.09816e-05 )
+f(x) = ( -1.11022e-16 2.65352e-15 )
 Initial:
 x = ( 5 5 )
 f(x) = ( 40008 -4000 )
-number of steps = 431
+number of steps = 430
 x = ( 1 1 )
-f(x) = ( -0 0 )
+f(x) = ( 9.01501e-14 -4.44089e-14 )
 Initial:
 x = ( 1 1 )
 f(x) = ( -46 -38 )
 number of steps = 6
 x = ( -0.127961 -1.95371 )
-f(x) = ( 0 0 )
+f(x) = ( 8.88178e-16 0 )

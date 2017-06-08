@@ -24,7 +24,7 @@ int main() {
 	printf("# Matrix A\n");
 	matrix_print (A);
 
-	givens (Q2);
+	givens_decomp (Q2);
 	givens_unpack_Q (Q2, Q1);
 
 	// copy A -> Q
@@ -82,7 +82,7 @@ int main() {
 	printf("# Vector b(n) = \n");
 	vector_print (x);
 
-	givens (D);
+	givens_decomp (D);
 	givens_solve (D, x);
 	printf("# Solving for x in QRx = b\n");
 	vector_print (x);

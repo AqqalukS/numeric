@@ -1,8 +1,0 @@
-set term png
-set out "plot.times.png"
-set logscale xy
-set xlabel "n"
-set ylabel "times"
-plot \
- "times2.txt" index 0 title "Jacobi cyclic"\
- ,"times2.txt" index 1 title "Jacobi row by row"
