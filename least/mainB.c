@@ -4,39 +4,10 @@
 #include "matrix.h"
 #include "vector.h"
 #include "lineq.h"
+#include "funs.h"
 
-void least_square_fit (vector *x, vector *y, vector *dy, vector *c, 
-		matrix *S, double f(int, double));
-
-// Exercise A
-double funs (int i, double x) {
-	switch (i) {
-		case 0: return 1.0/x; 	break;
-		case 1: return 1.0; 	break;
-		case 2: return x; 	break;
-		default:{fprintf(stderr, "function: wrong i: %d", i);
-			return NAN;
-		}
-	}
-}
-
-double fit (double x, double f(int, double), vector *c) {
-	double s = 0;
-	for (int i = 0; i < c->size; i++) {
-		s += vector_get (c, i) * f(i, x);
-	}
-	return s;
-}
-
-double df (double x, double f(int, double), matrix *S) {
-	double s = 0;
-	for (int i = 0; i < S->size1; i++) {
-		for (int j = 0; j < S->size1; j++) {
-			s += f(i, x) * matrix_get (S, i, j) * f(j, x);
-		}
-	}
-	return sqrt(s);
-}
+void least_square_singular (vector *x, vector *y, vector *dy, vector *c, matrix *S,
+		double f(int, double));
 
 int main(int argc, const char *argv[])
 {
@@ -66,7 +37,7 @@ int main(int argc, const char *argv[])
 	}
 	printf("\n\n");
 
-	least_square_fit (x, y, dy, c, S, funs);
+	least_square_singular (x, y, dy, c, S, funs);
 
 	double dx =  (vector_get (x, n-1) - vector_get (x, 0)) / (nx-1);
 
@@ -78,6 +49,8 @@ int main(int argc, const char *argv[])
 			fit(xi, funs, c) + df(xi, funs, S));
 		xi += dx;
 	}
+	printf("\n\n");
+
 
 	vector_free (x);
 	vector_free (y);

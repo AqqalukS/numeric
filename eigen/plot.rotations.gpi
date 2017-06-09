@@ -1,9 +1,0 @@
-set term png
-set out "plot.rotations.png"
-set logscale xy
-set xlabel "n"
-set ylabel "rotations"
-plot \
- "rotations.txt" index 0 title "Jacobi cyclic"\
-,"rotations.txt" index 1 title "Jacobi row by row"\
-,"rotations.txt" index 2 title "Jacobi classic"

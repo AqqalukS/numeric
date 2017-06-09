@@ -7,7 +7,6 @@ matrix * matrix_alloc (int n, int m) {
 	return A;
 }
 
-
 void matrix_set (matrix *A, int i, int j, double x) {
 	A->data[i+j*A->size1] = x;
 }
@@ -42,9 +41,9 @@ void matrix_print (matrix *A) {
 }
 
 void matrix_x_matrix (matrix *A, matrix *B, matrix *C) {
-	assert (A->size2 == B->size1 && 
-		C->size1 == A-> size1 && 
-		C->size2 == B->size2);
+	assert (A->size2 == B->size1); 
+	assert (C->size1 == A->size1);
+	assert (C->size2 == B->size2);
 	for (int i = 0; i < A->size1; i++) {
 		for (int j = 0; j < B->size2; j++) {
 			double s = 0;
@@ -58,10 +57,10 @@ void matrix_x_matrix (matrix *A, matrix *B, matrix *C) {
 }
 
 void matrixT_x_matrix (matrix *A, matrix *B, matrix *C) {
-	assert(A->size1 == B->size1 &&
-		C->size1 == A->size2 &&
-		C->size2 == B->size2);
-	for (int i = 0; i < A->size2; i++) {
+	assert(A->size1 == B->size1);
+	assert(C->size1 == A->size2);
+	assert(C->size2 == B->size2);
+	for (int i = 0; i < C->size1; i++) {
 		for (int j = 0; j < B->size1; j++) {
 			double s = 0;
 			for (int k = 0; k < A->size1; k++) {
@@ -74,9 +73,9 @@ void matrixT_x_matrix (matrix *A, matrix *B, matrix *C) {
 
 
 void matrix_x_matrixT (matrix *A, matrix *B, matrix *C) {
-	assert(A->size2 == B->size2 &&
-		C->size1 == A->size1 &&
-		C->size2 == B->size1);
+	assert(A->size2 == B->size2);
+	assert(C->size1 == A->size1);
+	assert(C->size2 == B->size1);
 	for (int i = 0; i < C->size1; i++) {
 		for (int j = 0; j < C->size2; j++) {
 			double s = 0;

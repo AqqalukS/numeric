@@ -42,38 +42,3 @@ void least_square_fit (vector *x, vector *y, vector *dy, vector *c,
 	vector_free (r);
 }
 
-void least_square_singular (vector *x, vector *y, vector *dy, vector *c, matrix *S,
-		double, f(int, double)) {
-	int n = x->size, m = c->size;
-	matrix *A = matrix_alloc (n, m);
-	matrix *D = matrix_alloc (m, m);
-	matrix *S = matrix_alloc (m, m);
-	matrix *V = matrix_alloc (m, m);
-	matrix *U = matrix_alloc (m, m);
-	vector *b = vector_alloc (n);
-	vector *e = vector_alloc (m);
-
-	for (int i = 0; i < n; i++) {
-		vector_set (b, i, vector_get (y, i)/
-				vector_get (dy, i));
-		for (int j = 0; j < m; j++) {
-			matrix_set (A, i, j, f(j, vector_get (x,i)) /
-						vector_get (dy, i));
-		}
-	}
-	matrixT_x_matrix (A, A, D);
-	int *jacobi = jacobi_cyclic (D, e, V);
-	matrix_set_identity (D); 
-	for (int i = 0; i < m; i++) {
-		matrix_set (D, i, i, vector_get (e, i));
-	}
-
-	free (jacobi);
-	matrix_free (A);
-	matrix_free (D);
-	matrix_free (S);
-	matrix_free (V);
-	matrix_free (U);
-	vector_free (b);
-	vector_free (e);
-}

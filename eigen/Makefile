@@ -58,4 +58,4 @@ vector.o : ../vector/vector.c ../vector/vector.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	$(RM) *.o jacobi_test main_cyclic main_by_row plot_seq 
+	$(RM) *.o jacobi_test main_cyclic main_by_row main_classic plot_seq *.txt *.png
