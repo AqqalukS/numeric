@@ -1,6 +1,6 @@
 CFLAGS += -I../matrix -I../vector -I../lineq -I../eigen -Wall -O
 LDLIBS += -lm 
-#CC = gcc --std=gnu99
+CC = gcc --std=c11
 
 all : plot.png
 
@@ -27,4 +27,4 @@ jacobi.o : ../eigen/jacobi.c ../eigen/jacobi.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	$(RM) *.o mainA data log *.png
+	$(RM) *.o mainA mainB  data log *.png

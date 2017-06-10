@@ -1,8 +1,3 @@
-1
-2
-e(n) = e(3)
-D(n, m) = D(3, 3)
-e(n) = e(3)
-D(n, m) = D(3, 3)
-e(n) = e(-117640573)
-mainB: ../eigen/jacobi.c:6: jacobi_cyclic: Assertion `A->size1 == x->size' failed.
+2.03142
+39.3088
+706.514

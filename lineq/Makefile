@@ -1,6 +1,6 @@
 CFLAGS += -I../matrix -I../vector -Wall -O
 LDLIBS += -lm 
-CC = gcc-4.9 -std=c11
+CC = gcc -std=c11
 
 all : data
 	cat ./$<

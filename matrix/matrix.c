@@ -60,10 +60,11 @@ void matrixT_x_matrix (matrix *A, matrix *B, matrix *C) {
 	assert(A->size1 == B->size1);
 	assert(C->size1 == A->size2);
 	assert(C->size2 == B->size2);
-	for (int i = 0; i < C->size1; i++) {
-		for (int j = 0; j < B->size1; j++) {
+	int n = A->size1, m = A->size2;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < m; j++) {
 			double s = 0;
-			for (int k = 0; k < A->size1; k++) {
+			for (int k = 0; k < n; k++) {
 				s += matrix_get (A, k, i) * matrix_get (B, k, j);
 			}
 			matrix_set (C, i, j, s);

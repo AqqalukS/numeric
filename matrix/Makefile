@@ -1,4 +1,5 @@
 CFLAGS += -I../vector/ -Wall -O
+LDLIBS += -lm 
 
 all : data
 	cat $<
@@ -14,4 +15,4 @@ vector.o : ../vector/vector.c ../vector/vector.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	$(RM) *.o matrix_test data 
+	$(RM) *.o matrix_test data log

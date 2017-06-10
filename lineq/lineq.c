@@ -38,8 +38,8 @@ void qr_gs_decomp (matrix *A, matrix *R) {
 }
 
 void qr_gs_solve (const matrix *Q, const matrix *R, vector *b, vector *x) {
-	assert(Q->size1 == b->size &&
-		Q->size2 == R->size1);
+	assert(Q->size1 == b->size);
+	assert(Q->size2 == R->size1);
 	matrixT_x_vector (Q, b, x);
 	backsub (R, x);
 }
