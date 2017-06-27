@@ -3,6 +3,8 @@
 #include <math.h>
 #include "interp.h"
 #include "vector.h"
+#define RND ((double)rand() / RAND_MAX)
+
 int main(int argc, const char *argv[]) {
 	int n = atof(argv[1]);
 
@@ -11,8 +13,8 @@ int main(int argc, const char *argv[]) {
 
 	fprintf(stderr, "# datapoints\n");
 	for (int i = 0; i < n; i++) {
-		vector_set (x, i, M_PI/n*i);
-		vector_set (y, i, cos(vector_get(x, i)));
+		vector_set (x, i, i);
+		vector_set (y, i, RND);
 		fprintf(stderr, "%g %g\n", 
 				vector_get(x, i), 
 				vector_get(y, i));
@@ -24,9 +26,9 @@ int main(int argc, const char *argv[]) {
 	printf("# interpolation \n");
 	printf("# x linterp qspline cspline\n");
 	for (double z = vector_get(x, 0); z < vector_get(x, n-1); z += dz) {
-		double l1 = linterp (x, y, z);
-		double l2 = qspline_evaluate (qs, z);
-		double l3 = cspline_evaluate (cs, z);
+		double l1 = linterp (x, y, z); 			// Linear spline
+		double l2 = qspline_evaluate (qs, z); 		// Quatratic spline
+		double l3 = cspline_evaluate (cs, z); 		// Cubic spline
 		printf("%g %g %g %g\n", z, l1, l2, l3);
 	}
 	qspline_free (qs);

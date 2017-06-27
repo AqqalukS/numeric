@@ -1,7 +1,7 @@
-#include "interp.h"
-#include "vector.h"
 #include <stdlib.h>
 #include <assert.h>
+#include "interp.h"
+#include "vector.h"
 
 double linterp (vector *x, vector *y, double z) {
 	assert(x->size == y->size);

@@ -32,21 +32,10 @@ void least_square_singular (vector *x, vector *y, vector *dy, vector *c, matrix 
 
 
 	matrixT_x_matrix (A, A2, D);
-/*	double s;
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < m; j++) {
-			s = 0;
-			for (int k = 0; k < n; k++) {
-				s += matrix_get (A, k, i) * matrix_get (A2, k, j);
-			}
-			matrix_set (D, i, j, s);
-		}
-	}*/
 	int jacobi = jacobi_cyclic (D, e, V);
 	matrix_set_identity (D); 
 	for (int i = 0; i < m; i++) {
 		matrix_set (D, i, i, pow(vector_get (e, i), -0.5));
-		fprintf(stderr, "%g\n", vector_get (e, i));
 	}
 	for (int i = 0; i < m; i++) {
 		matrix_set (R, i, i, pow(vector_get (e, i), 0.5));

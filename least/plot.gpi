@@ -1,7 +1,23 @@
-set term png
+set term png size 800, 400 font ",10"
 set out "plot.png"
+set key box opaque right
+set multiplot layout 1,2 title "Least square fit"
+# Plot of least square fit
+set xlabel "x"
+set ylabel "y" 
+set key title 'Least sqare fit'
 plot \
-"data" index 0 with yerrorbars title "Measurements"\
-,"data" index 1 using 1:2 with line title "Least square fit"\
-,"data" index 1 using 1:3 with line title "Least square fit"\
-,"data" index 1 using 1:4 with line title "Least square fit"
+ "data_AB.txt" index 0 with yerrorbars title "data"\
+,"data_AB.txt" index 1 using 1:2 with line title "F(x)"\
+,"data_AB.txt" index 1 using 1:3 with line title "F + dF(x)"\
+,"data_AB.txt" index 1 using 1:4 with line title "F - dF(x)"
+# Plot of Singular lest square fit
+set xlabel "x"
+set ylabel "y" 
+set key title 'Singular-value decomp'
+plot \
+ "data_C.txt" index 0 with yerrorbars title "data"\
+,"data_C.txt" index 1 using 1:2 with line title "F(x)"\
+,"data_C.txt" index 1 using 1:3 with line title "F(x) + dF(x)"\
+,"data_C.txt" index 1 using 1:4 with line title "F(x) - dF(x)"
+unset multiplot

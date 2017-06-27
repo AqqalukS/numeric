@@ -20,12 +20,11 @@ int main (int argc, char** argv) {
 			matrix_set (A, j, i, matrix_get (A, i, j));
 		}
 	}
-	int *jacobi = jacobi_cyclic (A, b, V);
-	printf("%i %i \n", n, jacobi[1]);
+	int jacobi = jacobi_cyclic (A, b, V);
+	printf("%i %i \n", n, jacobi);
 	// free stuff
 	matrix_free (V);
 	matrix_free (A);
 	vector_free (b);
-	free (jacobi);
 	return 0;
 }

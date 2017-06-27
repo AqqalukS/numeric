@@ -28,7 +28,7 @@ int main (int argc, char** argv) {
 	matrix_print (A);
 
 	// Jacobi diagonalization
-	int *jacobi = jacobi_cyclic (A, b, V);
+	int jacobi = jacobi_cyclic (A, b, V);
 	
 	printf("# Distroyed upper triangular matrix A\n");
 	matrix_print (A);
@@ -39,8 +39,7 @@ int main (int argc, char** argv) {
 			matrix_set (A, i, j, matrix_get (A, j, i));
 		}
 	}
-	printf("# Number of sweeps = %i\n", jacobi[0]);
-	printf("# Number of rotations = %i\n", jacobi[1]);
+	printf("# Number of rotations = %i\n", jacobi);
 
 	printf("# Orthogonal matrix V of eigenvectors \n");
 	matrix_print (V);
@@ -107,6 +106,5 @@ int main (int argc, char** argv) {
 	matrix_free (R3);
 	matrix_free (R4);
 	vector_free (b);
-	free (jacobi);
 	return 0;
 }

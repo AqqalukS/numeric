@@ -1,14 +1,23 @@
 CFLAGS += -I../matrix -I../vector -I../lineq -Wall -O
 LDLIBS += -lm 
-CC = gcc-4.9 -std=c11
 
-all : data
-	cat $<
+all : dataA.txt dataB.txt dataC.txt
+	cat $^
 
-data : main
+dataA.txt : mainA
 	./$< > $@
 
-main : main.o root.o matrix.o vector.o lineq.o
+dataB.txt : mainB
+	./$< > $@
+
+dataC.txt : mainC
+	./$< > $@
+
+mainA : mainA.o root.o funs.o matrix.o vector.o lineq.o
+
+mainB : mainB.o root.o funs.o matrix.o vector.o lineq.o
+
+mainC : mainC.o root.o funs.o matrix.o vector.o lineq.o
 
 matrix.o : ../matrix/matrix.c ../matrix/matrix.h
 	$(CC) -c $(CFLAGS) $< -o $@
@@ -20,4 +29,4 @@ lineq.o : ../lineq/lineq.c ../lineq/lineq.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	$(RM) *.o main data log *.png
+	$(RM) *.o mainA mainB mainC *.txt *.png

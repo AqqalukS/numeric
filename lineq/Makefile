@@ -1,14 +1,17 @@
 CFLAGS += -I../matrix -I../vector -Wall -O
 LDLIBS += -lm 
-CC = gcc -std=c11
 
-all : data
-	cat ./$<
+all : outputA.txt outputB.txt outputC.txt
+	cat ./$^
 
-data : mainA mainB mainC
+outputA.txt : mainA 
 	./$< > $@
-	./$(word 2, $^) >> $@
-	./$(word 3, $^) >> $@
+
+outputB.txt : mainB 
+	./$< > $@
+
+outputC.txt : mainC 
+	./$< > $@
 
 mainC : mainC.o lineq.o matrix.o vector.o
 
@@ -23,4 +26,4 @@ vector.o : ../vector/vector.c ../vector/vector.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	$(RM) *.o mainA mainB mainC data
+	$(RM) *.o mainA mainB mainC *.txt

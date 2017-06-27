@@ -3,7 +3,7 @@
 #include "root.h"
 #include "matrix.h"
 
-int main(int argc, const char *argv[]) {
+int main (int argc, const char *argv[]) {
 	vector *x = vector_alloc (2);
 	vector *fx = vector_alloc (2);
 	int ds, calls;
@@ -50,7 +50,6 @@ int main(int argc, const char *argv[]) {
 	dx = 1e-9, eps = 1e-9;
 
 	void f2 (vector *v, vector *df) {
-		calls++;
 		double x = vector_get (v, 0);
 		double y = vector_get (v, 1);
 		vector_set (df, 0, -2*(1-x) - 400*x*(y - x*x));
@@ -85,7 +84,6 @@ int main(int argc, const char *argv[]) {
 	dx = 1e-9, eps = 1e-9;
 
 	void f3 (vector *v, vector *df) {
-		calls++;
 		double x = vector_get (v, 0);
 		double y = vector_get (v, 1);
 		vector_set (df, 0, 4*x*(x*x + y - 11) + 2*(x + y*y -7));
