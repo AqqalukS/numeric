@@ -1,5 +1,8 @@
-#ifndef HAVE_ODE_H
-#include "vector.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "ode.h"
+
 void rkstep23 (double t, double h, vector *y, void f(double t, vector *y, vector *dydt), vector *yh, vector *err);
 void driver (
 	double *t, double b, double *h, vector *y, double acc, double eps, 
@@ -8,5 +11,8 @@ void driver (
 		void f(double t, vector *y, vector *dydt), vector *yh, vector *err
 		), 
 	void f (double t, double *y, double *dydt));
-#define HAVE_ODE_H 
-#endif
+
+int main (int argc, const char *argv[]) {
+	double b = M_PI;
+	return 0;
+}
