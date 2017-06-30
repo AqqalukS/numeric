@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 #include "interp.h"
 #include "vector.h"
 
@@ -20,6 +21,31 @@ double linterp (vector *x, vector *y, double z) {
 	double p = dy/dx;
 	return vector_get(y, i) +p * (z - vector_get(x, i));
 }
+
+double linterp_integ (vector *x, vector *y, double z) {
+	double s = 0, dx, dy;
+	int j = x->size - 1, i = 0, m;
+	while (j - i > 1) {
+		m = (i + j) / 2;
+		if (z > vector_get (x, m)) {
+			i = m;
+		}
+		else {
+			j = m;
+		}
+	}
+	for (int j = 0; j < i; j++) {
+		dx = vector_get (x, j+1) - vector_get (x, j);
+		dy = vector_get (y, j+1) - vector_get (y, j);
+		s += vector_get (y, j) * dx + 0.5 * dy/dx * dx * dx;
+	}
+	dx = vector_get (x, i+1) - vector_get (x, i);
+	dy = vector_get (y, i+1) - vector_get (y, i);
+	s = s + vector_get (y, i) * (z - vector_get (x, i)) 
+			+ 0.5 * dy/dx * (z - vector_get (x, i)) * (z - vector_get (x, i));
+	return s;
+}
+
 
 qspline * qspline_alloc (vector *vx, vector *vy) {
 	assert(vx->size == vy->size);
@@ -77,6 +103,49 @@ double qspline_evaluate (qspline *s, double z) {
 	}
 	double dx = z - s->x[i];
 	return s->y[i] + s->b[i] * dx + s->c[i] * dx*dx;
+}
+
+double qspline_integ (qspline *s, double z) {
+	assert (z >= s->x[0]);
+	assert (z <= s->x[s->n - 1]);
+	double sum = 0, w;
+	int i = 0, j = s->n -1, m;
+	while (j - i > 1) {
+		m = (i + j) / 2;
+		if (z > s->x[m]) {
+			i = m;
+		}
+		else {
+			j = m;
+		}
+	}
+	for (j = 0; j < i; j++) {
+		w = s->x[j+1] - s->x[j];
+		sum += s->y[j] * w 
+			+ 0.5 * s->b[j] * pow (w, 2) 
+			+ 1/3 * s->c[j] * pow (w, 3);
+	}
+	w = z - s->x[i];
+	sum = sum + s->y[i] * w 
+		+ 0.5 * s->b[i] * pow (w, 2) 
+		+ 1/3 * s->c[i] * pow (w, 3);
+	return sum;
+}
+
+double qspline_deriv (qspline *s, double z) {
+	int i = 0, j = s->n-1;
+
+	while (j - i > 1) {
+		int m = (i + j) / 2;
+		if (z > s->x[m]) {
+			i = m;
+		}
+		else {
+			j = m;
+		}
+	}
+	double w = z - s->x[i];
+	return s->b[i] + 2*s->c[i] * w;
 }
 
 void qspline_free (qspline *s) {
@@ -160,6 +229,42 @@ double cspline_evaluate (cspline *s, double z) {
 	}
 	double dx = z - s->x[i];
 	return s->y[i] + s->b[i] * dx + s->c[i] * dx*dx + s->d[i] * dx*dx*dx;
+}
+
+double cspline_integ (cspline *s, double z) {
+	assert (z >= s->x[0]);
+	assert (z <= s->x[s->n - 1]);
+	double sum = 0, w;
+	int i = 0;
+	while (i < s->n && s->x[i+1] < z) {
+		w = s->x[i+1] - s->x[i];
+		sum += s->y[i] * w 
+			+ 0.5 * s->b[i] * pow (w, 2) 
+			+ 1/3 * s->c[i] * pow (w, 3) 
+			+ 1/4 * s->d[i] * pow (w, 4);
+		i++;
+	}
+	w = z - s->x[i];
+	return  sum + s->y[i] * w 
+		+ 0.5 * s->b[i] * pow (w, 2) 
+		+ 1/3 * s->c[i] * pow (w, 3) 
+		+ 1/4 * s->d[i] * pow (w, 4);
+}
+
+double cspline_deriv (cspline *s, double z) {
+	int i = 0, j = s->n-1;
+
+	while (j - i > 1) {
+		int m = (i + j) / 2;
+		if (z > s->x[m]) {
+			i = m;
+		}
+		else {
+			j = m;
+		}
+	}
+	double w = z - s->x[i];
+	return s->b[i] + 2*s->c[i] * w + 3 * s->d[i] * w*w;
 }
 
 void cspline_free (cspline *s) {

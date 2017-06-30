@@ -2,6 +2,7 @@
 // h_next = h (tau/e_i)^0.25 0.95
 #include "vector.h"
 #include "ode.h"
+#include <math.h>
 #define stepper rkstep23
 
 void rkstep23 (double t, double h, vector *y, void f(double t, vector *y, vector *dydt), vector *yh, vector *err) {
@@ -12,6 +13,7 @@ void rkstep23 (double t, double h, vector *y, void f(double t, vector *y, vector
 	vector *k4 = vector_alloc (n);
 	vector *yt = vector_alloc (n);	
 
+			fprintf(stderr, "h = %g\n", h);
 	f (t, y, k1);
 	for (int i = 0; i < n; i++) {
 		vector_set (yt, i, vector_get (y, i) + 1./2 * vector_get (k1, i) * h);
@@ -34,7 +36,7 @@ void rkstep23 (double t, double h, vector *y, void f(double t, vector *y, vector
 					7./24 * vector_get (k1, i) +
 					1./4 * vector_get (k2, i) + 
 					1./3 *vector_get (k3, i) +
-					1./8 * vector_get (k4, i) + 
+					1./8 * vector_get (k4, i)
 				       ) * h);
 		vector_set (err, i, vector_get (yh , i) - vector_get (yt, i));
 	}
@@ -47,42 +49,38 @@ void rkstep23 (double t, double h, vector *y, void f(double t, vector *y, vector
 }
 
 void driver (
-	double *t, double b, double *h, vector *y, double acc, double eps, 
+	double t, double b, double h, vector *y, double acc, double eps, 
 	void stepper (
 		double t, double h, vector *y, 
 		void f(double t, vector *y, vector *dydt), vector *yh, vector *err
 		), 
-	void f (double t, double *y, double *dydt)) {
-	int n = y->size, k = 0;
-	double tau, e, normy, s;
+	void f (double t, vector *y, vector *dydt)) {
+	int n = y->size;
+	double tau, e, normy, a = t;
 	vector *yh = vector_alloc (n);
 	vector *err = vector_alloc (n);
 	while (t < b) {
+		fprintf(stderr, "t = %g\n", t);
 		if (t + h > b) {
 			h = b - t;
 		}
 		stepper (t, h, y, f, yh, err);
-		s = 0;
-		for (int i = 0; i < n; i++) {
-			s += vector_get (err, i)*vector_get (err, i);
-		}
-		e = sqrt (s);
-		s = 0;
-		for (int i = 0; i < n; i++) {
-			s += vector_get (yh, i)*vector_get (yh, i);
-		}
-		normy = sqrt (s);
 
+		e = vector_norm (err);
+		normy = vector_norm (yh);
 		tau = (normy * eps + acc) * sqrt (h/(b - a));
-		if (err < tau) {
-			k ++;
-			t = t + h;
+		if (e < tau) {
+			t += h;
 			vector_cp (y, yh);
 		}
-		if (err > 0) {
-			h *= pow (tau/err, 0.25) * 0.95;
-		else
-			h *= 2;
+		if (e > 0) {
+			h *= pow (tau/e, 0.25) * 0.95;
+		}
+		else {
+			h *= 2.;
+			fprintf(stderr, "h = %g\n", h);
 		}
 	}
+	vector_free (err);
+	vector_free (yh);
 }

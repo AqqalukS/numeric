@@ -3,7 +3,7 @@
 #include "matrix.h"
 
 void driver (
-	double *t, double b, double *h, vector *y, double acc, double eps, 
+	double t, double b, double h, vector *y, double acc, double eps, 
 	void stepper (
 		double t, double h, vector *y, 
 		void f(double t, vector *y, vector *dydt), vector *yh, vector *err
